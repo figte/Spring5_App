@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "docentes")
@@ -22,6 +23,7 @@ public class Docente {
 	private String nombre;
 	
 	@Max(100)
+	@Nullable
 	private String especialidad;
 	
 	

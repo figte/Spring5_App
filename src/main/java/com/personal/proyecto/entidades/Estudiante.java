@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 
 @Entity
 @Table(name = "estudiantes")
@@ -12,10 +15,13 @@ public class Estudiante {
 	@Id
 	private Integer id;
 	
+	@NonNull
 	private String nombre;
 	
+	@Nullable
 	private String direccion;
 	
+	@Nullable
 	private Integer edad;
 
 	//Constructores
