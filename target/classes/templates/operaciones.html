@@ -1,0 +1,22 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Operaciones</title>
+</head>
+<body>
+	<h1>Operacion Matematica</h1>
+
+	<form action="/prueba/operaciones" method="Post">
+		<label>Numero 1:</label>
+		<input type="number" name="n1" placeholder="Digite el primer numero">
+		<label>Numero 2:</label>
+		<input type="number" name="n2" placeholder="Digite el segundo numero">
+				
+		<button>Calcular</button>
+	</form>
+	
+	<!--SE MUESTRA EL RESULTADO CUANDO SE ENVIA LA PETICION A PROCESAR LOS DATOS  --> 
+	<h3 th:text="${resultado}"></h3>
+</body>
+</html>

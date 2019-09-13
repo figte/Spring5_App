@@ -1,0 +1,11 @@
+com\personal\proyecto\data\Data.class
+com\personal\proyecto\controladores\DocenteController.class
+com\personal\proyecto\entidades\Docente.class
+com\personal\proyecto\controladores\EstudianteController.class
+com\personal\proyecto\repositorios\IEstudianteRepository.class
+com\personal\proyecto\entidades\Estudiante.class
+com\personal\proyecto\MiProyectoSpringApplication.class
+com\personal\proyecto\repositorios\IDocenteRepository.class
+com\personal\proyecto\Services\EstudianteServices.class
+com\personal\proyecto\controladores\Prueba2Controller.class
+com\personal\proyecto\controladores\PruebaController.class
