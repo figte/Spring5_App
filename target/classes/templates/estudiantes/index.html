@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:include="/layouts/layout::plantilla">
+<head>
+	<title th:fragment="titulo">Estudiantes</title>
+</head>
+<body>
+   <div th:fragment="content">
+   		<table class="table">
+		<thead>
+			<tr> 
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Direccion</th>
+				<th>Edad</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- Estructira repetitiva para recorrer el listado que viene en
+		variable 'items', esta el el foreach -->
+			<tr th:each="i : ${items}">
+				<td th:text="${i.id}"></td>
+				<td th:text="${i.nombre}"></td>
+				<td th:text="${i.direccion}"></td>
+				<td th:text="${i.edad}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 th:each=" item: ${items}"></h3>
+   </div>
+</body>
+</html>
