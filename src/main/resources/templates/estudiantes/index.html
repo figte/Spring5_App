@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:include="/layouts/layout::plantilla">
+	th:include="/layouts/layout2::plantilla2">
 <head>
 	<title th:fragment="titulo">Estudiantes</title>
 </head>
 <body>
    <div th:fragment="content">
-   		<table class="table">
+		<a  class="btn btn-primary mt-4" th:href="@{/estudiante/guardar}" role="button">Nuevo</a>
+		<h1 class="text-center mt-2 mb-2">Datos de estudiantes</h1>
+		<h1 th:if="${items.size()==0}">No hay datos para mostrar</h1>	   
+		<table class="table" th:if="${items.size()>0}" id="datos">
 		<thead>
 			<tr> 
 				<th>Id</th>
 				<th>Nombre</th>
 				<th>Direccion</th>
 				<th>Edad</th>
+				<th>Operaciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,9 +27,14 @@
 				<td th:text="${i.nombre}"></td>
 				<td th:text="${i.direccion}"></td>
 				<td th:text="${i.edad}"></td>
+				
+				<td>
+					<a name="" id="" class="btn btn-warning" href="" role="button">Modificar</a>
+					<a name="" id="" class="btn btn-danger" href="#" role="button">Eliminar</a>
+				</td>
 			</tr>
 		</tbody>
-	</table>
+		</table>
 
 	<h3 th:each=" item: ${items}"></h3>
    </div>

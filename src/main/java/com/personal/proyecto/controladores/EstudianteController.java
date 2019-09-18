@@ -2,10 +2,12 @@ package com.personal.proyecto.controladores;
 
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,24 +36,23 @@ public class EstudianteController {
 	
 	@GetMapping("index")
 	public String listar(Model m) {
+		
 		m.addAttribute("items",(List<Estudiante>) er.findAll());
 		return "estudiantes/index";
 	}
 	
 	@GetMapping("guardar")
-	public String vistaGuardar() {
+	public String vistaGuardar(Model model) {
+		model.addAttribute("estudiante", new Estudiante());
 		return "estudiantes/guardar";
 	}
 	
 	@PostMapping("guardar")
-	public String guardar(@RequestParam Integer id,
-			@RequestParam String nombre,
-			@RequestParam String direccion,
-			@RequestParam Integer edad) {
-		//preccesando peticion
-		Estudiante e=new Estudiante(id,nombre,direccion,edad);
-		
-		er.save(e);
+	public String guardar(@Valid Estudiante estudiante,BindingResult result) {
+		if (result.hasErrors()) {
+			return "/estudiantes/guardar";
+		}
+		er.save(estudiante);
 		//Data.listadoEstudiantes.add(e);
 		
 		return "redirect:/estudiante/index";

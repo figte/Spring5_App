@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/layouts/layout::plantilla">
+    <head>
+       <title th:fragment="titulo">Guardar Docente</title>
+    </head>
+
+    <body>
+        <div class="container" th:fragment="content">
+            <h1 class="text-center mt-4">Guardar</h1>
+            <form action="/docente/guardar" method="POST">
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-12 col-form-label">Nombre:</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Digite su nombre">
+                        <!-- <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small> -->
+                    </div>
+                </div>
+              
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-12 col-form-label">Especialidad:</label>
+                    <div class="col-sm-12">
+                        <select name="especialidad" id="especialidad" class="form-control">
+                            <option th:each="e:${especialidades}" th:value="${e.id}" th:text="${e.especialidad}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class=" col-sm-10">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a name="regresar" id="regresar" class="btn btn-danger" href="/docente/index" role="button">Regresar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

@@ -1,47 +1,46 @@
 package com.personal.proyecto.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "docentes")
 public class Docente {
 	@Id
 	@NonNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column
-	@Max(100)
-	@NonNull
-	@NotBlank(message = "Campo requerido")	
+		
+	@NotNull(message = "campo requerido")
 	private String nombre;
 	
-	@Max(100)
-	@Nullable
-	private String especialidad;
-	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	private Especialidad especialidad;
 	
 	//contructores
-	
 	public Docente() {
 		
 	}
 
-	public Docente(Integer id, String nombre, String especialidad) {
+	public Docente(Integer id, String nombre) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.especialidad = especialidad;
 	}
 	
 	//setter y getter
-	
 	public Integer getId() {
 		return id;
 	}
@@ -58,12 +57,18 @@ public class Docente {
 		this.nombre = nombre;
 	}
 
-	public String getEspecialidad() {
-		return especialidad;
-	}
-
-	public void setEspecialidad(String especialidad) {
+	/**
+	 * @param especialidad the especialidad to set
+	 */
+	public void setEspecialidad(Especialidad especialidad) {
 		this.especialidad = especialidad;
 	}
+	/**
+	 * @return the especialidad
+	 */
+	public Especialidad getEspecialidad() {
+		return especialidad;
+	}
+	
 	
 }

@@ -11,6 +11,8 @@
 
 <body>
 
+	
+
 	<!-- Barra de menu y navegacion -->
 	<div th:include="/componentes/navbar::navbar"></div>
 	
@@ -21,6 +23,20 @@
 			
 		<!-- Footer o pie de pagina -->
 		<div th:include="/componentes/footer::footer"></div>
+
+		<script>
+			//configuracion de data table
+			$(document).ready(function() {
+				$('#datos').DataTable({
+					//agregando todo a idioma espaniol
+					"language": {
+								"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+								},
+				     
+				});
+			} );
+
+		</script>
 	</div>
 	
 </body>

@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:include="/layouts/layout::plantilla">
 <head>
-<meta charset="ISO-8859-1">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<title>Docentes</title>
+<title th:fragment="titulo" >Docentes</title>
 </head>
-<body>
-	<h1>Datos de docentes.</h1>
-	<table class="table">
+<body class="container" th:fragment="content">
+	<a name="nuevo" id="nuevo" class="btn btn-primary mt-4" href="/docente/guardar" role="button">Nuevo</a> <br>
+	<h1 class="text-center mt-2 mb-2">Datos de docentes.</h1> <br>
+	<h1 th:if="${items.size()==0}">No hay datos para mostrar</h1>	
+	<table class="table" th:if="${items.size()>0}" id="datos" >
 		<thead>
 			<tr> 
 				<th>Id</th>
 				<th>Nombre</th>
 				<th>Especialidad</th>
-				
+				<th>Operaciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,7 +22,11 @@
 			<tr th:each="i : ${items}">
 				<td th:text="${i.id}"></td>
 				<td th:text="${i.nombre}"></td>
-				<td th:text="${i.especialidad}"></td>
+				<td th:text="${i.especialidad.especialidad}"></td>
+				<td>
+					<a name="modificar" id="modificar" class="btn btn-warning" th:href="@{'/docente/modificar/' + ${i.id}}" role="button">Modificar</a>
+					<a name="eliminar" id="eliminar" class="btn btn-danger" th:href="@{'/docente/eliminar/' + ${i.id}}"  role="button">Eliminar</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>

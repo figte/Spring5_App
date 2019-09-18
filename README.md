@@ -1,7 +1,6 @@
 # MiProyectoSpring
  Aplicación con ejemplos básico y mantenimientos CRUD con base de datos Mysql utilizando Spring 5 (Spring Boot V.2.x), con JPA ,Thymeleaf, Bootstrap y JQuery.
  
-El script de la base de datos esta en el proyecto.
 
 CORRER PROYECTO.
 
