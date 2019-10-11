@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+th:include="/layouts/layout::plantilla">
+    <head>
+            <title th:fragment="titulo">Ventas Guardar</title>
+    </head>
+    <body th:fragment="content">
+        <div class="container">
+         <h6 class="text-center mt-2">Venta</h6>
+            <form>
+                <div class="form-group row">
+                    <label for="inputName" class="col-sm-1 col-form-label">Fecha</label>
+                    <div class="col-sm-11">
+                        <input type="date" class="form-control" name="fecha" id="fecha" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputName" class="col-sm-1 col-form-label">cliente</label>
+                    <div class="col-sm-10">
+                     
+                        <input th:if="@{${cliente}!=null}" th:value="${cliente.nombre}"  type="text" class="form-control" name="cliente" id="cliente"  readonly="readonly">
+                        <input th:if="@{${cliente}==null}"   type="text" class="form-control" name="cliente" id="cliente"  readonly="readonly">
+                       
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCliente">
+                            Buscar
+                    </button>
+                            
+                </div>
+                <hr>
+                <h6 class="text-center">Detalles de la venta</h6>
+                <div class="form-group row">
+                         <div class="col-sm-3">
+                            <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad" >
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="producto" id="producto"  readonly="readonly">
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalProducto">
+                                Buscar
+                        </button>
+                         <input name="agregarProducto" id="agregarProducto" class="btn btn-success ml-1 " type="button" value="Agregar">
+                 </div>
+
+                 <table class="table" id="detalles">
+                     <thead >
+                         <tr>
+                             <th>#</th>
+                             <th>Producto</th>
+                             <th>Precio</th>
+                             <th>Total</th>
+                             <th>Operaciones</th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td>4</td>
+                                 <td>Jabon</td>
+                                 <td>$3</td>
+                                 <td>$12</td>
+                                 <td>
+                                     <a name="eliminarDetalle" id="eliminarDetalle" class="btn btn-danger" href="#" role="button">Eliminar</a>
+                                 </td>
+                             </tr>
+                             <tr>
+                                    <td>4</td>
+                                    <td>Jabon</td>
+                                    <td>$3</td>
+                                    <td>$12</td>
+                                    <td>
+                                        <a name="eliminarDetalle" id="eliminarDetalle" class="btn btn-danger" href="#" role="button">Eliminar</a>
+                                    </td>
+                                </tr>
+                         </tbody>
+                 </table>
+                </form>
+                 <!--Modales-->
+                 <!--  Modal Para seleccionar cliente-->
+                    <!-- The Modal -->
+                    <div class="modal fade" id="ModalCliente">
+                            <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title">Listado de clientes</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <table class="table table-hover"  id="datos">
+                                            <thead>
+                                                <tr>
+                                                        <th>ID</th>
+                                                        <th>Nombre</th>
+                                                        <th>Telefono</th>
+                                                        <th>Direccion</th>
+                                                        <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="item2 : ${clientes}">
+                                                    <td th:text="${item2.id}"></td>
+                                                    <td th:text="${item2.nombre}"></td>
+                                                    <td th:text="${item2.telefono}"></td>
+                                                    <td th:text="${item2.direccion}"></td>
+                                                    <td>
+                                                        <form action="/ventas/cargarCliente" method="POST">
+                                                            <input type="number" name="id" th:value="${item2.id}" hidden>
+                                                            <button id="agregarCliente" class="btn btn-primary" >Agregar</button>
+                                                        </form>
+                                                       
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                </div>
+                                
+                            </div>
+                            </div>
+                        </div>
+                     <!--  Modal Para seleccionar producto-->
+                    <!-- The Modal -->
+                    <div class="modal fade" id="ModalProducto">
+                            <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title">Listado de productos</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                        <table class="table table-hover"  id="datos2">
+                                                <thead>
+                                                    <tr>
+                                                            <th>ID</th>
+                                                            <th>Nombre</th>
+                                                            <th>Precio</th>
+                                                            <th>Acciones</th>
+                                                    </tr>
+                                                   
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="item : ${productos}">
+                                                        <td th:text="${item.id}"></td>
+                                                        <td th:text="${item.nombre}"></td>
+                                                        <td th:text="${item.precio}"></td>
+                                                        <td>
+                                                            <button id="AgregarProducto" class="btn btn-primary">Agregar</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                        </table>
+                                </div>
+                
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                
+                            </div>
+                            </div>
+                        </div>   
+                <script>
+                $(document).ready(function(){
+                    
+                });
+                
+                </script> 
+            
+        </div>
+    </body>
+</html>

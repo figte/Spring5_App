@@ -1,12 +1,9 @@
 package com.personal.proyecto.Services;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.personal.proyecto.entidades.Estudiante;
 import com.personal.proyecto.repositorios.IEstudianteRepository;
 
@@ -16,7 +13,6 @@ public class EstudianteServices {
 	@Autowired //se inyecta  implementacion del objeto
 	IEstudianteRepository er;
 	
-
 	//obtener todos los registros
 	public List<Estudiante> listar(){
 		return (List<Estudiante>) er.findAll();
@@ -32,13 +28,11 @@ public class EstudianteServices {
 			System.err.println("ERROR: "+e2.getMessage());
 			return false;
 		}
-	}
-	
+	}	
 	//eliminar
 	
 	//modificar
 	
 	//buscar
-	
 	
 }

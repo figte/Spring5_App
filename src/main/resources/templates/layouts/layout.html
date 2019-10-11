@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	th:fragment="plantilla">
+
 <head>
 	<!-- Assest.metadatos, estilos y script -->
 	<div th:include="/componentes/assets::assets"></div>
-	
 	<!-- inclusion de fragment generico que va cambiar segun a quien se herede o signe el layout -->
 	<title th:include="this::titulo"></title>
 </head>
 
 <body>
-
-	
-
 	<!-- Barra de menu y navegacion -->
 	<div th:include="/componentes/navbar::navbar"></div>
 	
@@ -34,8 +31,15 @@
 								},
 				     
 				});
+			      //para el data table
+			$('#datos2').DataTable({
+					//agregando todo a idioma espaniol
+					"language": {
+								"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+								},
+				     
+				});	
 			} );
-
 		</script>
 	</div>
 	
