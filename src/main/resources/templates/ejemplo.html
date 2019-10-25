@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ejemplo</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 
+</head>
+<body>
+    <!--***********************CONTENIDO*****************************************  -->
+    <div class="container">
+             <!-- Button para abrir el Modal para Nuevo registro-->
+        <button  type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#nuevo">Nuevo</button>
+          
+          <!-- Tabla donde estaran los datos -->
+          <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Tipo Persona</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tdatos">
+                  
+                </tbody>
+            </table>
+              
+
+    </div>
+    
+   
+
+      <!-- ********************************MODAL´S*********************************************** -->
+
+      <!-- The Modal para nuevo registro-->
+      <div class="modal" id="nuevo">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Usuario</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- elementos de entrada de datos -->
+                <!-- ID -->
+                <!-- <div class="form-group">
+                  <label for="id">Id</label>
+                  <input type="number" name="id" id="id" class="form-control" placeholder="digite el id" >
+                </div> -->
+                <!-- Nombre -->
+                <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                       <input type="text" name="nombre" id="nombre" class="form-control" placeholder="digite el nombre" >
+                 </div>
+                 <!-- Direccion -->
+                 <div class="form-group">
+                        <label for="direccion">Direccion</label>
+                        <textarea class="form-control" name="direccion" id="direccion" cols="30" rows="5"></textarea>
+                  </div>
+                 <!-- Telefono -->
+                 <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                       <input type="text" name="telefono" id="telefono" class="form-control" placeholder="digite el telefono" >
+                 </div>
+
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button id="btnGuardar" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+      <!--Modal para editar  registro-->
+      <div class="modal" id="editar">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Editar registro</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+          
+                <!-- Modal body -->
+                <div class="modal-body">
+                 <!-- elementos de entrada de datos -->
+                <!-- ID -->
+                     <div class="form-group">
+                        <label for="id">Id</label>
+                        <input readonly="readonly" type="number" name="id" id="id2" class="form-control" placeholder="digite el id" >
+                      </div>
+                      <!-- Nombre -->
+                      <div class="form-group">
+                              <label for="nombre">Nombre</label>
+                             <input type="text" name="nombre" id="nombre2" class="form-control" placeholder="digite el nombre" >
+                       </div>
+                       <!-- Direccion -->
+                       <div class="form-group">
+                              <label for="direccion">Direccion</label>
+                              <textarea class="form-control" id="direccion2" cols="30" rows="5"></textarea>
+                        </div>
+                       <!-- Telefono -->
+                       <div class="form-group">
+                              <label for="telefono">Telefono</label>
+                             <input type="text" name="telefono" id="telefono2" class="form-control" placeholder="digite el telefono" >
+                       </div>
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button id="btnActualizar" type="button" class="btn btn-success" data-dismiss="modal">Actuaizar</button>
+                </div>
+          
+              </div>
+            </div>
+       </div>
+
+
+      <!-- Modal para eliminar registro -->
+      <div class="modal" id="eliminar">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Eliminar registro</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+          
+                <!-- Modal body -->
+                <div class="modal-body">
+                 <h1>¿Esta seguro de eliminar el registro?</h1>
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button id="btnEliminar" type="button" class="btn btn-danger" data-dismiss="modal">SI</button>
+                  <button type="button" class="btn btn-success" data-dismiss="modal">NO</button>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+
+      <!-- ***************************SCRIPT´S ****************************-->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+      <!-- Script para programar  -->
+     <script>
+
+        let persona={id:0};
+
+        function setIdPersona(id){
+            persona.id=id;
+           // alert("id: "+persona.id);
+        }
+
+         //preparancdo todo para cuando el documento o la apgina web se ha cargado y esta lista
+         $(document).ready(inicio);
+
+         function inicio() {
+                cargarDatos();
+                $("#btnGuardar").click(guardar);
+                $("#btnEliminar").click(function(){
+                    eliminar(persona.id);
+                });
+                $("#btnActualizar").click(modificar);
+         }
+
+         function reset() {
+             $("#id").val(null);
+             $("#nombre").val(null);
+             $("#direccion").val("");
+             $("#direccion").text("");
+             $("#telefono").val(null);
+
+             $("#id2").val(null);
+             $("#nombre2").val(null);
+             $("#direccion2").val("");
+             $("#direccion2").text("");
+             $("#telefono2").val(null);
+         }
+
+
+          //METODO PARA CARGAR DATOS CON UNA PETICION AJAX
+          //EN LA TABLA.
+          function cargarDatos() {
+              //peticion AJAX al back-end
+              $.ajax({
+                url:"/persona/all",
+                method:"Get",
+                success:function(response){
+                    //se procesa la respuesta del back-end o servidor
+                    //y se agregar los valores obtenidos en la respuesta
+                    //a la tabla, a su tbody
+
+                    //resetear datos de la tabla
+                    $("#tdatos").html("");
+
+                    //se recorren los elementos del array 
+                    //retornado como respuesta
+                    for (let i = 0; i < response.length; i++) {
+                            
+                        $("#tdatos").append(""
+                        +"<tr>"
+                            +"<td>"+response[i].id+"</td>"
+                            +"<td>"+response[i].nombre+"</td>"
+                            +"<td>"+response[i].direccion+"</td>"
+                            +"<td>"+response[i].telefono+"</td>"
+                            +"<td>"+response[i].tipoPersona.tipo+"</td>"
+                            +"<td>"
+                                +"<button onclick='cargarRegistro("+response[i].id+")'  type='button' class='btn btn-warning ml-4 mt-1' data-toggle='modal' data-target='#editar'>Editar</button>"
+                                +"<button onclick='setIdPersona("+response[i].id+");' type='button' class='btn btn-danger ml-4 mt-1' data-toggle='modal' data-target='#eliminar'>Eliminar</button>"
+                            +"</td>"
+                        +"</tr>");
+                            
+                        }
+                        
+
+                    // response.forEach(i=>{
+                    //      //concatenando valores a la tbody de la tabla
+                       
+                    //     $("#tdatos").append(""
+                    //     +"<tr>"
+                    //         +"<td>"+i.id+"</td>"
+                    //         +"<td>"+i.nombre+"</td>"
+                    //         +"<td>"+i.direccion+"</td>"
+                    //         +"<td>"+i.telefono+"</td>"
+                    //         +"<td>"
+                    //             +"<button type='button' class='btn btn-warning ml-4 mt-1' data-toggle='modal' data-target='#editar'>Editar</button>"
+                    //             +"<button type='button' class='btn btn-danger ml-4 mt-1' data-toggle='modal' data-target='#eliminar'>Eliminar</button>"
+                    //         +"</td>"
+                    //     +"</tr>");
+                    // });
+                },
+                error:function(response){
+                    //imprimo el mensaje de error
+                    alert("Eror en la peticion: "+response);
+                }
+              });
+
+          }
+
+
+          //METODO PARA GUARDAR INFORMACION 
+          function guardar(){
+              $.ajax({
+                  url:"/persona/saveOrUpdate",
+                  method:"Post",
+                  data:{
+                      id:null, //PARA GUARDAR EL id TIENE QUE IR NULO
+                      nombre:$("#nombre").val(),
+                      direccion:$("#direccion").val(),
+                      telefono:$("#telefono").val()
+                   },
+                   success:function(response){
+                        alert("REGISTRO GUARDADO CORRECTAMENTE.");
+                        reset();
+                        cargarDatos();
+                   },
+                   error:function(response){
+                       alert("Error en la peticion "+response);
+                   }
+
+              });
+          }
+
+          function eliminar(id){
+              $.ajax({
+                  url:"/persona/delete/"+id,
+                  method:"Get",
+                  success:function(response){
+                        alert("REGISTRO ELIMINADO CORRECTAMENTE.");
+                        cargarDatos();
+                   },
+                   error:function(response){
+                       alert("Error en la peticion "+response);
+                   }
+
+              });
+          }
+
+
+          function cargarRegistro(id){
+                $.ajax({
+                    url:"/persona/get/"+id,
+                    method:"Get",
+                    success:function(response){
+
+                        $("#id2").val(response.id);
+                        $("#nombre2").val(response.nombre);
+                        $("#direccion2").text(response.direccion);
+                        $("#direccion2").val(response.direccion);
+                        $("#telefono2").val(response.telefono);
+                    },
+                    error:function(response){
+                        alert("Error "+response);
+                    }
+                });
+          }
+
+        
+         function modificar(){
+              $.ajax({
+                  url:"/persona/saveOrUpdate",
+                  method:"Post",
+                  data:{
+                      id:$("#id2").val(),
+                      nombre:$("#nombre2").val(),
+                      direccion:$("#direccion2").val(),
+                      telefono:$("#telefono2").val()
+                   },
+                   success:function(response){
+                        alert("REGISTRO MODIFICADO CORRECTAMENTE.");
+                        reset();
+                        cargarDatos();
+                   },
+                   error:function(response){
+                       alert("Error en la peticion "+response);
+                   }
+
+              });
+          }
+
+     </script>
+    
+</body>
+</html>

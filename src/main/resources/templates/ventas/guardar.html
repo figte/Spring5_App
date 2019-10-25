@@ -22,7 +22,7 @@ th:include="/layouts/layout::plantilla">
                         <input th:if="@{${cliente}==null}"   type="text" class="form-control" name="cliente" id="cliente"  readonly="readonly">
                        
                     </div>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCliente">
+                    <button id="buscarClientes" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCliente">
                             Buscar
                     </button>
                             
@@ -73,6 +73,8 @@ th:include="/layouts/layout::plantilla">
                                 </tr>
                          </tbody>
                  </table>
+
+                 <button type="button" id="GuardarVenta" class="btn btn-primary">Guardar</button>
                 </form>
                  <!--Modales-->
                  <!--  Modal Para seleccionar cliente-->
@@ -99,23 +101,19 @@ th:include="/layouts/layout::plantilla">
                                                         <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="datosClientes">
                                                 <tr th:each="item2 : ${clientes}">
                                                     <td th:text="${item2.id}"></td>
                                                     <td th:text="${item2.nombre}"></td>
                                                     <td th:text="${item2.telefono}"></td>
                                                     <td th:text="${item2.direccion}"></td>
-                                                    <td>
-                                                        <form action="/ventas/cargarCliente" method="POST">
-                                                            <input type="number" name="id" th:value="${item2.id}" hidden>
-                                                            <button id="agregarCliente" class="btn btn-primary" >Agregar</button>
-                                                        </form>
-                                                       
+                                                    <td>    
+                                                        <button th:onclick="" id="agregarCliente" class="btn btn-primary" >Agregar</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                     </table>
-                                </div>
+                                </div>\
                                 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
@@ -171,10 +169,43 @@ th:include="/layouts/layout::plantilla">
                             </div>
                         </div>   
                 <script>
+
+                 let cliente={id:0,nombre:"",telefono:"",direccion:""};
+                 let producto={};
+                 let detalles=[];
+
+function prueba(a,b){
+   alert(a+" "+b);
+}
+
                 $(document).ready(function(){
-                    
+                                                                                                            
+
                 });
                 
+                function agregarCliente(id,nombre,telfono, direccion){
+                    cliente.id=id;
+                    cliente.nombre=nombre;
+                    cliente.telefono=telfono;
+                    cliente.direccion=direccion;
+
+                    $("#cliente").val(cliente.nombre);
+                }
+
+                function cargarDatos(){
+                    $.ajax({
+                        method:"Get",
+                        url:"/ventas/api/clientes",
+                        success:function(data){
+                         
+                        },
+                        error:function(data){
+                           alert("Error en la peticion"); 
+                           console.log(data);
+                        }
+
+                    })
+                }
                 </script> 
             
         </div>
