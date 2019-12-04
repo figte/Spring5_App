@@ -1,7 +1,8 @@
 
 package com.personal.proyecto.entidades;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Venta
  */
@@ -24,6 +27,8 @@ public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @DateTimeFormat(pattern = "yyy-mm-dd")
     private Date fecha;
     
     @ManyToOne(optional = false, fetch = FetchType.EAGER)

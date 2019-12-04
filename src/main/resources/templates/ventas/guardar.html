@@ -39,7 +39,7 @@ th:include="/layouts/layout::plantilla">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalProducto">
                                 Buscar
                         </button>
-                         <input name="agregarProducto" id="agregarProducto" class="btn btn-success ml-1 " type="button" value="Agregar">
+                         <input name="agregarDetalle" id="agregarDetalle" class="btn btn-success ml-1 " type="button" value="Agregar">
                  </div>
 
                  <table class="table" id="detalles">
@@ -52,29 +52,11 @@ th:include="/layouts/layout::plantilla">
                              <th>Operaciones</th>
                          </tr>
                          </thead>
-                         <tbody>
-                             <tr>
-                                 <td>4</td>
-                                 <td>Jabon</td>
-                                 <td>$3</td>
-                                 <td>$12</td>
-                                 <td>
-                                     <a name="eliminarDetalle" id="eliminarDetalle" class="btn btn-danger" href="#" role="button">Eliminar</a>
-                                 </td>
-                             </tr>
-                             <tr>
-                                    <td>4</td>
-                                    <td>Jabon</td>
-                                    <td>$3</td>
-                                    <td>$12</td>
-                                    <td>
-                                        <a name="eliminarDetalle" id="eliminarDetalle" class="btn btn-danger" href="#" role="button">Eliminar</a>
-                                    </td>
-                                </tr>
-                         </tbody>
+                         <tbody id="tDetalles">
+                        </tbody>
                  </table>
 
-                 <button type="button" id="GuardarVenta" class="btn btn-primary">Guardar</button>
+                 <button type="button" id="guardarVenta" class="btn btn-primary">Guardar</button>
                 </form>
                  <!--Modales-->
                  <!--  Modal Para seleccionar cliente-->
@@ -108,12 +90,12 @@ th:include="/layouts/layout::plantilla">
                                                     <td th:text="${item2.telefono}"></td>
                                                     <td th:text="${item2.direccion}"></td>
                                                     <td>    
-                                                        <button th:onclick="" id="agregarCliente" class="btn btn-primary" >Agregar</button>
+                                                        <button   class="btn btn-primary agregarCliente"  data-dismiss="modal" >Agregar</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                     </table>
-                                </div>\
+                                </div>
                                 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
@@ -153,7 +135,7 @@ th:include="/layouts/layout::plantilla">
                                                         <td th:text="${item.nombre}"></td>
                                                         <td th:text="${item.precio}"></td>
                                                         <td>
-                                                            <button id="AgregarProducto" class="btn btn-primary">Agregar</button>
+                                                            <button  class="btn btn-primary agregarProducto"  data-dismiss="modal">Agregar</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -171,25 +153,56 @@ th:include="/layouts/layout::plantilla">
                 <script>
 
                  let cliente={id:0,nombre:"",telefono:"",direccion:""};
-                 let producto={};
-                 let detalles=[];
-
-function prueba(a,b){
-   alert(a+" "+b);
-}
+                 const producto={id:0,nombre:""};
 
                 $(document).ready(function(){
                                                                                                             
+                    $(".agregarCliente").click(function(){
+                        agregarCliente($(this).parent().parent().children('td:eq(0)').text(),$(this).parent().parent().children('td:eq(1)').text());
+                    });
+                    $(".agregarProducto").click(function(){
+                        cargarProducto($(this).parent().parent().children('td:eq(0)').text(),$(this).parent().parent().children('td:eq(1)').text());
+                    });
+
+                    $("#agregarDetalle").click(agregarProducto);
+                    
+
+                    $("#guardarVenta").click(guardar);
 
                 });
                 
-                function agregarCliente(id,nombre,telfono, direccion){
+                function agregarCliente(id,nombre){
                     cliente.id=id;
                     cliente.nombre=nombre;
-                    cliente.telefono=telfono;
-                    cliente.direccion=direccion;
-
                     $("#cliente").val(cliente.nombre);
+                }
+
+                function cargarProducto(id, nombre){
+                    producto.id=id;
+                    producto.nombre=nombre;
+                    $("#producto").val(producto.nombre);
+                }
+
+                function agregarProducto() {
+                    $.ajax({
+                        url:"/ventas/agregarDetalle",
+                        method:"Post",
+                        data:{
+                            cantidad:$("#cantidad").val(),
+                            idProducto:producto.id
+                        },
+                        success:function(response){
+                            alert("Detalle agregardo");
+                            $("#cantidad").val(0);
+                            $("#producto").val("");
+                            producto.id=0;
+                            producto.nombre="";
+                            cargarDetalles();
+                        },
+                        error:function(response){
+                         alert("NO SE AGREGO EL DETALLE");
+                        }   
+                    });
                 }
 
                 function cargarDatos(){
@@ -206,6 +219,51 @@ function prueba(a,b){
 
                     })
                 }
+               
+               function cargarDetalles() {
+                   $.ajax({
+                       url:"/ventas/allDetalles",
+                       method:"Get",
+                       success:function(response){
+                        $("#tDetalles").html("");
+                          response.forEach(i => {
+                                $("#tDetalles").append(""
+                                +"<tr>"
+                                    +"<td>"+i.cantidad+"</td>"
+                                    +"<td>"+i.producto.nombre+"</td>"
+                                    +"<td>$"+i.producto.precio+"</td>"
+                                    +"<td>$"+(i.producto.precio*i.cantidad)+"</td>"
+                                +"</tr>"
+                                +"");      
+                          });
+                       },
+                       error:function(response){
+
+                        }
+                   });
+               }
+
+               function guardar() {
+                   $.ajax({
+                        url:"/ventas/save",
+                        method:"Post",
+                        data:{
+                            fecha:$("#fecha").val(),
+                            idCliente:cliente.id
+                        },
+                        success:function(response){
+                            alert("VENTA GUARDADA CORRECTAMENTE...");
+                            location.reload();
+                        },
+                        error:function(response){
+                            alert("VENTA NO GUARDADA ...");
+                        }
+
+                   });
+               }
+
+
+
                 </script> 
             
         </div>

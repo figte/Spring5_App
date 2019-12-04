@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mt-2">Registro de ventas</h1>
+            <table class="table" id="tDatos">
+                    <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Operaciones</th>
+                            </tr>
+                    </thead>
+            
+                    <!-- <tbody>
+            
+                    </tbody> -->
+                    <!-- <tfoot>
+                            <tr>
+                                <th>id</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Operaciones</th>
+                            </tr>
+                    </tfoot> -->
+         </table>
+    </div>
+    
+    
+      <!-- ***************************SCRIPT´S ****************************-->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+ 
+      <script>
+          $(document).ready( function () {
+                   $('#tDatos').DataTable({
+                    // "scrollY":400,
+       
+                    "ajax" : {
+                            "method" : "GET",
+                            "url" : "/ventas/allVentas"
+                        },
+
+                    "columns" : [ {
+                              "data" : "id",
+                              "width": "20%" 
+                            }, {
+                                "data" : "fecha",
+                                "width": "20%" 
+                            }, {
+                                "data" : "cliente",
+                                "width": "20%" 
+                            },{
+                                "data" : "operaciones",
+                                "width": "40%" 
+                            }],
+                    // "buttons" : [ {
+                    //         "copy" : 'copy'
+                    //     } ],
+                    // "lengthMenu" : [ [ 5, 10, 20 ], [ 5, 10, 20 ] ],       
+
+                    "language" : {
+                        "lengthMenu" : "Mostrar _MENU_ ",
+                        "zeroRecords" : "Datos no encontrados",
+                        "info" : "Mostar páginas _PAGE_ de _PAGES_",
+                        "infoEmpty" : "Datos no encontrados",
+                        "infoFiltered" : "(Filtrados por _MAX_ total registros)",
+                        "search" : "Buscar:",
+                        "paginate" : {
+                            "first" : "Primero",
+                            "last" : "Anterior",
+                            "next" : "Siguiente",
+                            "previous" : "Anterior"
+                        },
+                    }
+                });
+         } );
+
+        //  $('.dataTables_scrollBody').css('height', '400px');
+      </script>
+ 
+</body>
+</html>

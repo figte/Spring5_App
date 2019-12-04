@@ -35,8 +35,7 @@ class Prueba2Controller {
     /**
      * constructor
      */
-    public Prueba2Controller() {
-        
+    public Prueba2Controller() {  
     }
     /**
      * 
@@ -81,4 +80,6 @@ class Prueba2Controller {
          return new String("vista01");
      }
      
+
+
 }

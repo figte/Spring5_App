@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        
+    </head>
+
+    <body>
+    <div class="container">
+            <button id="btn" type="button" class="btn btn-success mt-2">Hacer Peticion</button>
+            <div class="row">
+                    <div class="col-xs-6 col-sm-6">
+                        <h1>PRUEBA DE AJAX</h1>
+                        <p>Es un ejercicio en el que se demuestra el uso de ajax
+                            para realizar peticiones asincronas, y cargar la respuesta 
+                            del servidor en una parte especifica de la pagina, sin interrumpir
+                            la ejecucion de esta.
+                        </p>
+                        <button id="btn2" class="btn btn-primary" type="button">Peticion 2</button>
+                        <div id="respuesta">
+
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6">
+                        <h2>CONTENIDO DE RESPYESTA A LA PETICION AJAX</h2>
+                        <div id="Response">
+         
+                        </div>
+                    </div>
+                </div>
+         
+    </div>
+     
+
+     <!-- ***************************SCRIPT´S ****************************-->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+     <script>
+        $(document).ready(inicio);
+
+        function inicio() {
+            $("#btn").click(peticion);
+            $("#btn2").click(peticion2);
+        }
+
+        function peticion() {
+            $.ajax({
+                url:"/prueba3/vista2",
+                method:"Get",
+                data:null,
+                success:function(response){
+                    $("#Response").html(response);
+                },
+                error:function(response){
+                    alert("Error: "+response);
+                }
+            });
+        }
+        function peticion2() {
+            $.ajax({
+                url:"/prueba3/vista3",
+                method:"Get",
+                data:null,
+                success:function(response){
+                    $("#respuesta").html(response);
+                },
+                error:function(response){
+                    alert("Error: "+response);
+                }
+            });
+        }
+
+        
+
+     </script>
+
+    </body>
+</html>
